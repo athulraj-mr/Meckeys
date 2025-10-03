@@ -541,6 +541,224 @@
     display: block;
 }
 
+.items {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 40px 30px;
+    margin: 0;
+    margin-bottom: 60px;
+    max-width: 100vw;
+    padding: 0;
+    list-style: none;
+    clear: both;
+}
+
+.items-li {
+    margin: 0;
+    float: none;
+    width: 100%;
+    clear: both;
+    padding: 0;
+    position: relative;
+    list-style: none;
+    display: list-item;
+}
+
+.items-li-con {
+    display: flex;
+    flex-direction: column;
+}
+
+.items-li-out {
+    position: relative;
+    display: block;
+}
+
+.items-li-out-img {
+    position: relative;
+    display: block;
+}
+
+.items-li-out-img img {
+    width: 100%;
+    display: block;
+    height: auto;
+    overflow: clip;
+}
+
+.items-li-outer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    z-index: 10;
+}
+
+.items-li-outer-a {
+    text-decoration: none;
+    margin: 0 0 10px;
+    margin-bottom: 0;
+    padding: 13px 15px;
+    z-index: 3;
+    line-height: 12px;
+    max-width: 90%;
+    display: block;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    top: 0;
+    cursor: pointer;
+    color: #000000;
+}
+
+.items-li-like {
+    bottom: 0;
+    position: absolute;
+    right: 10px;
+    padding: 10px 0;
+    z-index: 11;
+    display: grid;
+    grid-gap: 5px;
+    pointer-events: none;
+}
+
+.items-li-like-con {
+    order: 2;
+    align-self: end;
+    position: relative;
+    pointer-events: all;
+    cursor: pointer;
+    display: block;
+}
+
+.items-li-like-out {
+    background: #333333;
+    border-radius: 4px;
+    display: flex;
+    line-height: 12px;
+    padding: 6px 10px;
+}
+
+.items-li-text {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 16px;
+}
+
+.items-li-text-a {
+    display: block;
+    text-decoration: none;
+    color: #000000;
+    cursor: pointer;
+}
+
+.items-li-text-a h2 {
+    margin: 0;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0;
+    padding: .5em 0;
+    padding-top: 0;
+    color: #111111;
+    font-family: font2;
+    display: block;
+}
+
+.items-li-text-out {
+    display: block;
+}
+
+.items-li-text-outer {
+    font-size: 10.284px;
+    display: inline-block;
+    margin-bottom: 0;
+    float: none;
+    color: #ffb100;
+    overflow: hidden;
+    position: relative;
+    height: 10.281px;
+    width: 55.531px;
+    font-family: font6;
+}
+
+.items-li-text-outer::before {
+    content: "sssss";
+    color: #cfc8d8;
+    line-height: 10.284px;
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.items-li-text-in {
+    width: 97.6%;
+    overflow: hidden;
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding-top: 15.426px;
+}
+
+.items-li-text-in::before {
+    line-height: 10.284px;
+    content: "SSSSS";
+    top: 0;
+    position: absolute;
+    left: 0;
+}
+
+.items-li-text-out2 {
+    color: #666;
+    font-weight: 500;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.items-li-text-out2-del {
+    color: #666;
+    opacity: .5;
+    display: inline-block;
+    text-decoration: line-through;
+    font-family: font5;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 12px;
+}
+
+.items-li-text-out2-ins {
+    color: #666;
+    background: 0 0;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-family: font5;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 12px;
+}
+
 
 
 
@@ -580,7 +798,17 @@
         margin-bottom: 4px;
     }
 
-    
+    .items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .items-li-text-a h2 {
+        font-size: 16.25px;
+        font-weight: 700;
+        line-height: 19.5px;
+    }
+
+
 }
 
 /* Media 749px */
@@ -1017,8 +1245,10 @@
         margin-bottom: 40px;
     }
 
-    
-
+    .drop-form-sel {
+        line-height: 16.8px;
+        font-size: 14px;
+    }
 
 
     /* side bar */
@@ -1622,6 +1852,10 @@
         display: flex;
         gap: 16px;
         justify-content: flex-end;
+    }
+
+    .items {
+        grid-template-columns: repeat(3, 1fr);
     }
 
 
