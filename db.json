@@ -1,0 +1,58 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Arion frost X Keychron K8 Pro",
+      "image": "https://mks.blr1.cdn.digitaloceanspaces.com/uploads/2024/07/RK-R75-Skycyan-1-930x620.webp",
+      "price": 7999,
+      "original_price": 15000,
+      "category": "keyboard",
+      "brand": "Arion Frost"
+    },
+    {
+      "id": 2,
+      "name": "Royal Kludge RK S98 Wireless",
+      "image": "https://mks.blr1.cdn.digitaloceanspaces.com/uploads/2024/07/RKS98-Camping-1-300x200.webp",
+      "price": 8099,
+      "original_price": 12500,
+      "category": "keyboard",
+      "brand": "Royal Kludge"
+    },
+    {
+      "id": 3,
+      "name": "EPOMAKER X AULA F75 Max",
+      "image": "https://mks.blr1.cdn.digitaloceanspaces.com/uploads/2025/07/EPOMAKER-X-AULA-F75-Max-Black-side-printed-02-300x200.webp",
+      "price": 6999,
+      "original_price": 10500,
+      "category": "keyboard",
+      "brand": "EPOMAKER"
+    },
+    {
+        "id": 4,
+        "name": "Royal Kludge RK R65",
+        "image": "https://mks.blr1.cdn.digitaloceanspaces.com/uploads/2024/07/RKR65-Phantom-1-300x200.webp",
+        "price": 4399,
+        "original_price": 6500,
+        "category": "keyboard",
+        "brand": "Royal Kludge"
+    },
+    {
+        "id": 5,
+        "name": "EPOMAKER X AULA F99 Pro",
+        "image": "https://mks.blr1.cdn.digitaloceanspaces.com/uploads/2024/09/Product-image-removebg-preview-300x200.png",
+        "price": 5900,
+        "original_price": 5500,
+        "category": "keyboard",
+        "brand": "EPOMAKER" 
+    },
+    {
+        "id": 6,
+        "name": "EPOMAKER X AULA F75",
+        "image": "https://mks.blr1.cdn.digitaloceanspaces.com/uploads/2024/02/RKM75-1-300x200.webp",
+        "price": 6500,
+        "original_price": 9000,
+        "category": "keyboard",
+        "brand": "EPOMAKER"
+    }
+  ]
+}
