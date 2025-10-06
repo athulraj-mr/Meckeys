@@ -10,6 +10,8 @@ async function loadItems() {
     }
 }
 
+//list
+
 function renderItems(items) {
     const container = document.getElementById("items-list");
     container.innerHTML = "";
@@ -78,6 +80,42 @@ document.getElementById("sort-select").addEventListener("change", (e)=> {
     }
 
     renderItems(sorted);
+});
+
+
+const minRange = document.getElementById("min-range");
+const maxRange = document.getElementById("max-range");
+const minPrice = document.getElementById("min-price");
+const maxPrice = document.getElementById("max-price");
+
+//display price
+function priceShow(val) {
+    return '₹' + Number(val).toLocaleString();
+}
+
+//filter
+function filterPrice() {
+    const minVal = parseInt(minRange.value);
+    const maxVal = parseInt(maxRange.value);
+    minPrice.value = priceShow(minVal);
+    maxPrice.value = priceShow(maxVal);
+
+    const filtered = itemsData.filter(itm=> {
+        return itm.price >= minVal && itm.price <= maxVal;
+    });
+
+    renderItems(filtered);
+}
+
+[minRange, maxRange].forEach(input=> {
+    input.addEventListener("input", () => {
+        if(parseInt(minRange.value) > parseInt(maxRange.value)) {
+            const temp = minRange.value;
+            minRange.value = maxRange.value;
+            maxRange.value = temp;
+        }
+        filterPrice();
+    });
 });
 
 loadItems();

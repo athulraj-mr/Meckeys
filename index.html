@@ -237,23 +237,26 @@
                                     <div class="side-bar-filter-out">
                                         <div class="side-bar-filter-outer-outer">
                                             <div class="side-bar-filter-outer">
+
                                                 <div class="side-bar-filter-in">
                                                     <div class="side-bar-filter-inner">
                                                         <div class="side-bar-filter-macro"></div>
-                                                        <input class="side-bar-filter-input" type="range" min="339900" max="1999900" value="339900" step="1">
-                                                        <input class="side-bar-filter-input2" type="range" min="339900" max="1999900" step="1" value="1999900">
+                                                        <input class="side-bar-filter-input" id="min-range" type="range" min="3399" max="19999" value="3399" step="1">
+                                                        <input class="side-bar-filter-input2" id="max-range" type="range" min="3399" max="19999" step="1" value="19999">
                                                     </div>
                                                 </div>
+
                                                 <div class="side-bar-filter-val">
                                                     <div class="side-bar-filter-val-in">
                                                         <label for="">Min. Price</label>
-                                                        <input type="text" value="₹3,399">
+                                                        <input id="min-price" type="text" value="₹3,399">
                                                     </div>
                                                     <div class="side-bar-filter-val-in">
                                                         <label for="">Max. Price</label>
-                                                        <input type="text" value="₹19,999">
+                                                        <input id="max-price" type="text" value="₹19,999">
                                                     </div>
                                                 </div>
+
                                                 <div class="side-bar-filter-dot">
                                                 </div>
                                             </div>
@@ -536,6 +539,6 @@
     </div>
 
 
-    <script src="/js/sort.js"></script>
+    <script src="/functions.js"></script>
 </body>
 </html> 
