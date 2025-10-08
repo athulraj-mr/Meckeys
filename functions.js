@@ -84,42 +84,71 @@ document.getElementById("sort-select").addEventListener("change", (e)=> {
 });
 
 
-    document.querySelectorAll(".price").forEach(blk => {
-        const minRange = blk.querySelector(".min-range");
-        const maxRange = blk.querySelector(".max-range");
-        const minPrice = blk.querySelector(".min-price");
-        const maxPrice = blk.querySelector(".max-price");
+document.querySelectorAll(".price").forEach(blk => {
+    const minRange = blk.querySelector(".min-range");
+    const maxRange = blk.querySelector(".max-range");
+    const minPrice = blk.querySelector(".min-price");
+    const maxPrice = blk.querySelector(".max-price");
 
-        function priceShow(val) {
-            return '₹' + Number(val).toLocaleString();
-        }
+    function priceShow(val) {
+        return '₹' + Number(val).toLocaleString();
+    }
 
-        function filterPrice() {
-            const minVal = parseInt(minRange.value);
-            const maxVal = parseInt(maxRange.value);
+    function filterPrice() {
+        const minVal = parseInt(minRange.value);
+        const maxVal = parseInt(maxRange.value);
 
-            minPrice.value = priceShow(minVal);
-            maxPrice.value = priceShow(maxVal);
+        minPrice.value = priceShow(minVal);
+        maxPrice.value = priceShow(maxVal);
 
-            const filterd = itemsData.filter(itm => {
-                return itm.price >= minVal && itm.price <= maxVal;
-            })
+        const filterd = itemsData.filter(itm => {
+            return itm.price >= minVal && itm.price <= maxVal;
+        })
 
-            renderItems(filterd);
-        }
+        renderItems(filterd);
+    }
 
-        [minRange, maxRange].forEach(input=> {
-            input.addEventListener("input", ()=> {
-                if (parseInt(minRange.value) > parseInt(maxRange.value)) {
-                    const temp = minRange.value;
-                    minRange.value = maxRange.value;
-                    maxRange.value = temp;
-                }
-                filterPrice();
-            });
+    [minRange, maxRange].forEach(input=> {
+        input.addEventListener("input", ()=> {
+            if (parseInt(minRange.value) > parseInt(maxRange.value)) {
+                const temp = minRange.value;
+                minRange.value = maxRange.value;
+                maxRange.value = temp;
+            }
+            filterPrice();
         });
     });
+});
 
+
+//stock filter
+
+const checkBoxs = document.querySelectorAll(".stock-filter");
+
+checkBoxs.forEach(input => {
+    input.addEventListener("change", () => {
+        applyStockFilter();
+    });
+});
+
+function applyStockFilter() {
+    const values = Array.from(checkBoxs).filter(val => val.checked)
+        .map(val => val.value);
+    
+    let filterdItems = itemsData;
+
+    if(values.length > 0) {
+        filterdItems = itemsData.filter(item => {
+            if(values.includes("in") && item.stock === "in")
+                return true;
+            if(values.includes("out") && item.stock === "out")
+                return true;
+            return false;
+        });
+    }
+
+    renderItems(filterdItems)
+}
 
 
 //wishlist
