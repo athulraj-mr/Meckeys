@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="wrapper-main">
-        <header class="header">
+        <header class="header" id="header">
             <a class="header-a" href="">Skip to content</a>
             <div class="header-out">
                 <nav class="header-nav">
@@ -236,24 +236,24 @@
                                     <h3>Filter by price</h3>
                                     <div class="side-bar-filter-out">
                                         <div class="side-bar-filter-outer-outer">
-                                            <div class="side-bar-filter-outer">
+                                            <div class="side-bar-filter-outer price">
 
                                                 <div class="side-bar-filter-in">
                                                     <div class="side-bar-filter-inner">
                                                         <div class="side-bar-filter-macro"></div>
-                                                        <input class="side-bar-filter-input" id="min-range" type="range" min="3399" max="19999" value="3399" step="1">
-                                                        <input class="side-bar-filter-input2" id="max-range" type="range" min="3399" max="19999" step="1" value="19999">
+                                                        <input class="side-bar-filter-input min-range" id="min-range" type="range" min="3399" max="19999" value="3399" step="1">
+                                                        <input class="side-bar-filter-input2 max-range" id="max-range" type="range" min="3399" max="19999" step="1" value="19999">
                                                     </div>
                                                 </div>
 
                                                 <div class="side-bar-filter-val">
                                                     <div class="side-bar-filter-val-in">
                                                         <label for="">Min. Price</label>
-                                                        <input id="min-price" type="text" value="₹3,399">
+                                                        <input class="min-price" id="min-price" type="text" value="₹3,399">
                                                     </div>
                                                     <div class="side-bar-filter-val-in">
                                                         <label for="">Max. Price</label>
-                                                        <input id="max-price" type="text" value="₹19,999">
+                                                        <input class="max-price" id="max-price" type="text" value="₹19,999">
                                                     </div>
                                                 </div>
 
@@ -576,22 +576,22 @@
                                     <h3>Filter by price</h3>
                                     <div class="s-aside-outer">
                                         <div class="s-aside-in">
-                                            <div class="s-aside-inner">
+                                            <div class="s-aside-inner price">
                                                 <div class="s-aside-bar">
                                                     <div class="s-aside-bar-con">
                                                         <div class="s-aside-bar-out"></div>
-                                                        <input class="s-aside-bar-input1" id="min-range" type="range" min="3399" max="19999" value="3399" step="1">
-                                                        <input class="s-aside-bar-input2" id="max-range" type="range" min="3399" max="19999" step="1" value="19999">
+                                                        <input class="s-aside-bar-input1 min-range" id="min-range" type="range" min="3399" max="19999" value="3399" step="1">
+                                                        <input class="s-aside-bar-input2 max-range" id="max-range" type="range" min="3399" max="19999" step="1" value="19999">
                                                     </div>
                                                 </div>
                                                 <div class="s-aside-box">
                                                     <div class="s-aside-box-con">
                                                         <label class="s-aside-box-out" for="">Min. Price</label>
-                                                        <input class="s-aside-box-out-input" type="text" value="₹3,399">
+                                                        <input class="s-aside-box-out-input min-price" id="min-price" type="text" value="₹3,399">
                                                     </div>
                                                     <div class="s-aside-box-con">
                                                         <label class="s-aside-box-out1" for="">Max. Price</label>
-                                                        <input class="s-aside-box-out1-input" type="text" value="₹19,999">
+                                                        <input class="s-aside-box-out1-input max-price" id="max-price" type="text" value="₹19,999">
                                                     </div>
                                                 </div>
                                                 <div class="s-aside-line">
@@ -717,6 +717,5 @@
 
     <script src="/functions.js"></script>
     <script src="/sidebar.js"></script>
-    <script src="/filter.js"></script>
 </body>
 </html> 

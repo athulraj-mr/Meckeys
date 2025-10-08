@@ -84,41 +84,43 @@ document.getElementById("sort-select").addEventListener("change", (e)=> {
 });
 
 
-const minRange = document.getElementById("min-range");
-const maxRange = document.getElementById("max-range");
-const minPrice = document.getElementById("min-price");
-const maxPrice = document.getElementById("max-price");
+    document.querySelectorAll(".price").forEach(blk => {
+        const minRange = blk.querySelector(".min-range");
+        const maxRange = blk.querySelector(".max-range");
+        const minPrice = blk.querySelector(".min-price");
+        const maxPrice = blk.querySelector(".max-price");
 
-//display price
-function priceShow(val) {
-    return '₹' + Number(val).toLocaleString();
-}
-
-//filter
-function filterPrice() {
-    const minVal = parseInt(minRange.value);
-    const maxVal = parseInt(maxRange.value);
-    minPrice.value = priceShow(minVal);
-    maxPrice.value = priceShow(maxVal);
-
-    const filtered = itemsData.filter(itm=> {
-        return itm.price >= minVal && itm.price <= maxVal;
-    });
-
-    renderItems(filtered);
-    wishlistBtn();
-}
-
-[minRange, maxRange].forEach(input=> {
-    input.addEventListener("input", () => {
-        if(parseInt(minRange.value) > parseInt(maxRange.value)) {
-            const temp = minRange.value;
-            minRange.value = maxRange.value;
-            maxRange.value = temp;
+        function priceShow(val) {
+            return '₹' + Number(val).toLocaleString();
         }
-        filterPrice();
+
+        function filterPrice() {
+            const minVal = parseInt(minRange.value);
+            const maxVal = parseInt(maxRange.value);
+
+            minPrice.value = priceShow(minVal);
+            maxPrice.value = priceShow(maxVal);
+
+            const filterd = itemsData.filter(itm => {
+                return itm.price >= minVal && itm.price <= maxVal;
+            })
+
+            renderItems(filterd);
+        }
+
+        [minRange, maxRange].forEach(input=> {
+            input.addEventListener("input", ()=> {
+                if (parseInt(minRange.value) > parseInt(maxRange.value)) {
+                    const temp = minRange.value;
+                    minRange.value = maxRange.value;
+                    maxRange.value = temp;
+                }
+                filterPrice();
+            });
+        });
     });
-});
+
+
 
 //wishlist
 
