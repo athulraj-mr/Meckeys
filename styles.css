@@ -2550,7 +2550,7 @@
     }
 
     .footer-container {
-        padding-bottom: 18px;
+        padding-bottom: 13px;
     }
 
 }
@@ -2566,8 +2566,11 @@
         line-height: 16.18px;
     }
 
-}
+    .footer-logos-logos-a {
+        height: 26.47px;
+    }
 
+}
 
 
 
