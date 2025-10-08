@@ -39,7 +39,57 @@ let classObj = {
 };
 
 
+const checkBoxs = document.querySelectorAll(".stock-filter");
 
+checkBoxs.forEach(input => {
+    input.addEventListener("change", () => {
+        applyStockFilter();
+    });
+});
 
+function applyStockFilter() {
+    const values = Array.from(checkBoxs).filter(val => val.checked)
+        .map(val => val.value);
+    
+    let filterdItems = itemsData;
+
+    if(values.length > 0) {
+        filterdItems = itemsData.filter(item => {
+            if(values.includes("in") && item.stock === "in")
+                return true;
+            if(values.includes("out") && item.stock === "out")
+                return true;
+            return false;
+        });
+    }
+
+    renderItems(filterdItems);
+}
+
+//rating filter
+
+const rating_checkBoxs = document.querySelectorAll(".rating-filter");
+
+rating_checkBoxs.forEach(input => {
+    input.addEventListener("change", () => {
+        applyRatingFilter();
+    });
+});
+
+function applyRatingFilter() {
+    const values = Array.from(rating_checkBoxs)
+        .filter(input => input.checked)
+        .map(input => parseFloat(input.value));
+    
+    let filterdItems = itemsData;
+
+    if(values.length > 0) {
+        const minRating = Math.max(...values);
+
+        filterdItems = itemsData.filter(itm => itm.rating >= minRating);
+    }
+
+    renderItems(filterdItems);
+}
 
     

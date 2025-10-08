@@ -3053,6 +3053,18 @@
     position: relative;
 }
 
+.s-rating-ul-li-out svg {
+    display: none;
+    fill: #000;
+    height: 11.81px;
+    margin-left: 1.96px;
+    margin-top: .65px;
+    pointer-events: none;
+    position: absolute;
+    width: 11.81px;
+    overflow: hidden;
+}
+
 .s-rating-ul-li-outer {
     appearance: none;
     background-color: #fff;
@@ -3067,6 +3079,10 @@
     position: static;
     vertical-align: middle;
     width: 15.75px;
+}
+
+.s-rating-ul-li-outer:checked + svg {
+    display: block;
 }
 
 .s-rating-ul-li-out-span {
