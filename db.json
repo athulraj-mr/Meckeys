@@ -8,7 +8,8 @@
       "original_price": 15000,
       "category": "keyboard",
       "brand": "Arion Frost",
-      "stock": "in"
+      "stock": "in",
+      "rating": 5
     },
     {
       "id": 2,
@@ -18,7 +19,8 @@
       "original_price": 12500,
       "category": "keyboard",
       "brand": "Royal Kludge",
-      "stock": "in"
+      "stock": "in",
+      "rating": 3
     },
     {
       "id": 3,
@@ -28,7 +30,8 @@
       "original_price": 10500,
       "category": "keyboard",
       "brand": "EPOMAKER",
-      "stock": "out"
+      "stock": "out",
+      "rating": 4
     },
     {
         "id": 4,
@@ -38,7 +41,8 @@
         "original_price": 6500,
         "category": "keyboard",
         "brand": "Royal Kludge",
-        "stock": "out"
+        "stock": "out",
+        "rating": 3
     },
     {
         "id": 5,
@@ -48,7 +52,8 @@
         "original_price": 5500,
         "category": "keyboard",
         "brand": "EPOMAKER",
-        "stock": "in"
+        "stock": "in",
+        "rating": 5
     },
     {
         "id": 6,
@@ -58,7 +63,8 @@
         "original_price": 9000,
         "category": "keyboard",
         "brand": "EPOMAKER",
-        "stock": "out"
+        "stock": "out",
+        "rating": 4
     }
   ]
 }

@@ -147,7 +147,33 @@ function applyStockFilter() {
         });
     }
 
-    renderItems(filterdItems)
+    renderItems(filterdItems);
+}
+
+//rating filter
+
+const rating_checkBoxs = document.querySelectorAll(".rating-filter");
+
+rating_checkBoxs.forEach(input => {
+    input.addEventListener("change", () => {
+        applyRatingFilter();
+    });
+});
+
+function applyRatingFilter() {
+    const values = Array.from(rating_checkBoxs)
+        .filter(input => input.checked)
+        .map(input => parseFloat(input.value));
+    
+    let filterdItems = itemsData;
+
+    if(values.length > 0) {
+        const minRating = Math.max(...values);
+
+        filterdItems = itemsData.filter(itm => itm.rating >= minRating);
+    }
+
+    renderItems(filterdItems);
 }
 
 

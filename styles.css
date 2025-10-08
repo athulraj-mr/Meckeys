@@ -2161,6 +2161,18 @@
         position: relative;
     }
 
+    .rating-li-label svg {
+        display: none;
+        fill: #000;
+        height: 13.78px;
+        margin-left: 2.29px;
+        margin-top: .76px;
+        pointer-events: none;
+        position: absolute;
+        width: 13.78px;
+        overflow: hidden;
+    }
+
     .rating-li-label-in {
         appearance: none;
         background-color: #fff;
@@ -2175,6 +2187,10 @@
         vertical-align: middle;
         width: 18.375px;
         display: inline-block;
+    }
+
+    .rating-li-label-in:checked + svg {
+        display: block;
     }
 
     .rating-li-label-in::before {

@@ -39,20 +39,7 @@ let classObj = {
 };
 
 
-function lowest(cla) {    
-    let lowestA = Infinity;
-    let studenstLow = [];
 
-    cla.students.forEach(stu=> {
-        const total = stu.marks.reduce((sum, mar)=> sum + mar.marks, 0);
-        const avg = total / stu.marks.length;
 
-        if(avg < lowestA) {
-            lowestA = avg;
-            studenstLow = [{ name: students.name, average: avg}];
-        } else if(avg === lowest) {
-            studenstLow.push({name: students.name, average: avg });
-        }
-    })
-    return studenstLow;
-}
+
+    
