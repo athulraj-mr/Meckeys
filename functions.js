@@ -12,7 +12,6 @@ async function loadItems() {
 }
 
 //list
-
 function renderItems(items) {
     const container = document.getElementById("items-list");
     container.innerHTML = "";
@@ -66,96 +65,97 @@ function renderItems(items) {
     });
 }
 
-//sort
 
-document.getElementById("sort-select").addEventListener("change", (e)=> {
+//sort and filters
 
-    const value = e.target.value;
-    let sorted = [...itemsData];
+const sortSelect = document.getElementById("sort-select");
+sortSelect.addEventListener("change", applyFilters);
 
-    if (value === "low-high") {
-        sorted.sort((a,b)=> a.price - b.price);
-    }else if (value === "high-low") {
-        sorted.sort((a,b)=> b.price - a.price);
-    }
+const priceBar = document.querySelectorAll(".price");
 
-    renderItems(sorted);
-    wishlistBtn();
-});
-
-//price filter
-document.querySelectorAll(".price").forEach(blk => {
-    const minRange = blk.querySelector(".min-range");
-    const maxRange = blk.querySelector(".max-range");
-    const minPrice = blk.querySelector(".min-price");
-    const maxPrice = blk.querySelector(".max-price");
+priceBar.forEach(bar => {
+    const minRange = bar.querySelector(".min-range");
+    const maxRange = bar.querySelector(".max-range");
+    const minPrice = bar.querySelector(".min-price");
+    const maxPrice = bar.querySelector(".max-price");
 
     function priceShow(val) {
         return '₹' + Number(val).toLocaleString();
     }
 
-    function filterPrice() {
-        const minVal = parseInt(minRange.value);
-        const maxVal = parseInt(maxRange.value);
+    function updateText() {
+        if(parseInt(minRange.value) > parseInt(maxRange.value)) {
+            const temp = minRange.value;
+            minRange.value = maxRange.value;
+            maxRange.value = temp;
+        }
 
-        minPrice.value = priceShow(minVal);
-        maxPrice.value = priceShow(maxVal);
-
-        const filterd = itemsData.filter(itm => {
-            return itm.price >= minVal && itm.price <= maxVal;
-        })
-
-        renderItems(filterd);
+        minPrice.value = priceShow(minRange.value);
+        maxPrice.value = priceShow(maxRange.value);
     }
 
-    [minRange, maxRange].forEach(input=> {
-        input.addEventListener("input", ()=> {
-            if (parseInt(minRange.value) > parseInt(maxRange.value)) {
-                const temp = minRange.value;
-                minRange.value = maxRange.value;
-                maxRange.value = temp;
-            }
-            filterPrice();
+    [minRange, maxRange].forEach(input => {
+            input.addEventListener("input", ()=> {
+                updateText();
+                applyFilters();
+            });
         });
-    });
+
+    updateText();
 });
 
 
-//stock-rating filter
-
+//stock&rating
 const stockCheckBoxes = document.querySelectorAll(".stock-filter");
 const ratingCheckBoxes = document.querySelectorAll(".rating-filter");
 
-[...stockCheckBoxes, ...ratingCheckBoxes].forEach(input => {
-    input.addEventListener("change", applyFilters);
+[...stockCheckBoxes, ...ratingCheckBoxes].forEach(inp => {
+    inp.addEventListener("change", applyFilters);
 });
 
-
+//main filter
 function applyFilters() {
-    let filteredItems = itemsData;
 
-    //stock
+    let filteredItems = [...itemsData];
+
+    //price filter
+    priceBar.forEach(bar => {
+        const minVal = parseInt(bar.querySelector(".min-range").value);
+        const maxVal = parseInt(bar.querySelector(".max-range").value);
+        filteredItems = filteredItems.filter(itm => itm.price >= minVal && itm.price <= maxVal);
+    });
+
+    //stock filter
     const selectedStock = Array.from(stockCheckBoxes)
         .filter(input => input.checked)
         .map(input => input.value);
-
-    if (selectedStock.length > 0) {
+    
+    if(selectedStock.length > 0) {
         filteredItems = filteredItems.filter(itm => selectedStock.includes(itm.stock));
     }
 
-    //rating
+    //rating filter
     const selectedRatings = Array.from(ratingCheckBoxes)
-        .filter(inp => inp.checked)
-        .map(i => parseInt(i.value));
+        .filter(input => input.checked)
+        .map(input => parseInt(input.value));
 
-    if (selectedRatings.length > 0) {
-        filteredItems = filteredItems.filter(itm => selectedRatings.includes(itm.rating));
+    if(selectedRatings.length > 0) {
+        const minRating = Math.min(...selectedRatings);
+        filteredItems = filteredItems.filter(itm => itm.rating >= minRating);
+    }
+
+    //sort min-max
+    const sortValue = sortSelect.value;
+    if(sortValue === "low-high") {
+        filteredItems.sort((a,b) => a.price - b.price);
+    } else if(sortValue === "high-low") {
+        filteredItems.sort((a,b) => b.price - a.price);
     }
 
     renderItems(filteredItems);
+    wishlistBtn();
 
 }
-
 
 //wishlist
 
