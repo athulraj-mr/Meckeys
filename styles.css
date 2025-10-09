@@ -1981,6 +1981,28 @@
         justify-content: flex-end;
     }
 
+    .side-bar-filter-dot-btn {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        color: #000000;
+        cursor: pointer;
+        display: inline;
+        margin: 0;
+        padding: 0;
+        text-decoration: underline;
+        vertical-align: baseline;
+    }
+
+    .side-bar-filter-dot-btn span {
+        font-family: font5;
+        font-size: 12.25px;
+        font-weight: 400;
+        letter-spacing: normal;
+        line-height: 14.7px;
+    }
+
     .stock {
         word-break: break-word;
         margin-bottom: 40px;
@@ -2099,6 +2121,28 @@
         gap: 16px;
         justify-content: flex-end;
         margin-top: 17px;
+    }
+
+    .side-bar-dot-btn {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        color: #000000;
+        cursor: pointer;
+        display: inline;
+        margin: 0;
+        padding: 0;
+        text-decoration: underline;
+        vertical-align: baseline;
+    }
+
+    .side-bar-dot-btn span {
+        font-family: font5;
+        font-size: 12.25px;
+        font-weight: 400;
+        letter-spacing: normal;
+        line-height: 14.7px;
     }
 
     .rating {
@@ -2334,6 +2378,28 @@
         gap: 16px;
         justify-content: flex-end;
         margin-top: 16px;
+    }
+
+    .rating-star-dot-btn {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        color: #000000;
+        cursor: pointer;
+        display: inline;
+        margin: 0;
+        padding: 0;
+        text-decoration: underline;
+        vertical-align: baseline;
+    }
+
+    .rating-star-dot-btn span {
+        font-family: font5;
+        font-size: 12.25px;
+        font-weight: 400;
+        letter-spacing: normal;
+        line-height: 14.7px;
     }
 
     .five {
@@ -2883,7 +2949,32 @@
 .s-aside-line {
     display: flex;
     gap: 16px;
+    align-items: center;
+    justify-content: flex-end;
 }
+
+.s-aside-line-btn {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: #000000;
+    cursor: pointer;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+    vertical-align: baseline;
+}
+
+.s-aside-line-btn span {
+    font-family: font5;
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 12px;
+}
+
 
 .s-stock {
     word-break: break-word;
@@ -2984,9 +3075,34 @@
 
 .s-stock-line {
     display: flex;
+    align-items: center;
+    justify-content: flex-end;
     gap: 16px;
     margin-top: 16px;
 }
+
+.s-stock-line-btn {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: #000000;
+    cursor: pointer;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+    vertical-align: baseline;
+}
+
+.s-stock-line-btn span {
+    font-family: font5;
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 12px;
+}
+
 
 .s-rating {
     word-break: break-word;
@@ -3187,8 +3303,32 @@
 
 .s-rating-line {
     display: flex;
+    align-items: center;
+    justify-content: flex-end;
     gap: 14px;
     margin-top: 16px;
+}
+
+.s-rating-line-btn {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: #000000;
+    cursor: pointer;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+    vertical-align: baseline;
+}
+
+.s-rating-line-btn span {
+    font-family: font5;
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 12px;
 }
 
 .k {

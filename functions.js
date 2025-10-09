@@ -73,15 +73,15 @@ sortSelect.addEventListener("change", applyFilters);
 
 const priceBar = document.querySelectorAll(".price");
 
+function priceShow(val) {
+    return '₹' + Number(val).toLocaleString();
+}
+
 priceBar.forEach(bar => {
     const minRange = bar.querySelector(".min-range");
     const maxRange = bar.querySelector(".max-range");
     const minPrice = bar.querySelector(".min-price");
     const maxPrice = bar.querySelector(".max-price");
-
-    function priceShow(val) {
-        return '₹' + Number(val).toLocaleString();
-    }
 
     function updateText() {
         if(parseInt(minRange.value) > parseInt(maxRange.value)) {
@@ -155,6 +155,45 @@ function applyFilters() {
     renderItems(filteredItems);
     wishlistBtn();
 
+}
+
+//reset
+document.querySelectorAll(".reset-btn").forEach(btn => {
+    btn.addEventListener("click", ()=> {
+        const type = btn.dataset.reset;
+
+        if(type === "price") {
+            resetPriceFilter(btn);
+        }else if (type === "stock") {
+            resetStockFlilter();
+        }else if (type === "rating") {
+            resetRatingFilter();
+        }
+
+        applyFilters();
+    });
+});
+
+function resetPriceFilter(btn) {
+    const container = btn.closest(".price");
+
+    const minRange = container.querySelector(".min-range");
+    const maxRange = container.querySelector(".max-range");
+    const minPrice = container.querySelector(".min-price");
+    const maxPrice = container.querySelector(".max-price");
+
+    minRange.value = minRange.min;
+    maxRange.value = maxRange.max;
+    minPrice.value = priceShow(minRange.min);
+    maxPrice.value = priceShow(maxRange.max);
+}
+
+function resetStockFlilter() {
+    stockCheckBoxes.forEach(inp => inp.checked = false);
+}
+
+function resetRatingFilter() {
+    ratingCheckBoxes.forEach(inp => inp.checked = false);
 }
 
 //wishlist
