@@ -2,8 +2,9 @@ let itemsData = [];
 
 async function loadItems() {
     try {
-        const responds = await fetch('http://localhost:5000/items');
-        itemsData = await responds.json();
+        const responds = await fetch('./db.json');
+        const data = await responds.json();
+        itemsData = data.items;
         filteredItemsStore = [...itemsData];
         renderScrollItems();
         wishlistBtn();
