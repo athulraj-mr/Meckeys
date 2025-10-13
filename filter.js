@@ -1,130 +1,109 @@
-let classObj = {
-  name: "class A",
-  teacherName: "Mary",
-  students: [
-    {
-      name: "Ravi",
-      id: "101",
-      marks: [
-        { subject: "English", mark: 25 },
-        { subject: "Maths", mark: 48 },
-        { subject: "Physics", mark: 40 },
-        { subject: "Chemistry", mark: 30 },
-        { subject: "Computer", mark: 20 },
-      ],
-    },
-    {
-      name: "Aju",
-      id: "102",
-      marks: [
-        { subject: "English", mark: 35 },
-        { subject: "Maths", mark: 38 },
-        { subject: "Physics", mark: 33 },
-        { subject: "Chemistry", mark: 34 },
-        { subject: "Computer", mark: 30 },
-      ],
-    },
-    {
-      name: "Binu",
-      id: "104",
-      marks: [
-        { subject: "English", mark: 49 },
-        { subject: "Maths", mark: 49 },
-        { subject: "Physics", mark: 47 },
-        { subject: "Chemistry", mark: 46 },
-        { subject: "Computer", mark: 50 },
-      ],
-    },
-  ],
-};
-
+let itemsData = [];
 
 //sort
 
-document.getElementById("sort-select").addEventListener("change", (e)=> {
+const priceBar = document.querySelectorAll(".the class name");
 
-    const value = e.target.value;
-    let sorted = [...itemsData];
+function priceShow(val) {
+    return Number(val).toLocaleString();
+}
 
-    if (value === "low-high") {
-        sorted.sort((a,b)=> a.price - b.price);
-    }else if (value === "high-low") {
-        sorted.sort((a,b)=> b.price - a.price);
+priceBar.forEach(bar=> {
+    const minrange = bar.querySelector("class name");
+    const maxRange = bar.querySelector("class name")
+    const minprice = bar.querySelector("class name");
+    const maxprice = bar.querySelector("class name");
+
+    function updatetext() {
+        if(parseInt(minrange.value) > parseInt(maxRange.value)) {
+            const temp = minrange.value;
+            minrange.value = maxRange.value;
+            maxRange.value = temp;
+        }
+        minprice.value = priceShow(minrange.value);
+        maxprice.value = priceShow(maxRange.value);
     }
 
-    renderItems(sorted);
-    wishlistBtn();
-});
-
-//price filter
-document.querySelectorAll(".price").forEach(blk => {
-    const minRange = blk.querySelector(".min-range");
-    const maxRange = blk.querySelector(".max-range");
-    const minPrice = blk.querySelector(".min-price");
-    const maxPrice = blk.querySelector(".max-price");
-
-    function priceShow(val) {
-        return '₹' + Number(val).toLocaleString();
-    }
-
-    function filterPrice() {
-        const minVal = parseInt(minRange.value);
-        const maxVal = parseInt(maxRange.value);
-
-        minPrice.value = priceShow(minVal);
-        maxPrice.value = priceShow(maxVal);
-
-        const filterd = itemsData.filter(itm => {
-            return itm.price >= minVal && itm.price <= maxVal;
-        })
-
-        renderItems(filterd);
-    }
-
-    [minRange, maxRange].forEach(input=> {
-        input.addEventListener("input", ()=> {
-            if (parseInt(minRange.value) > parseInt(maxRange.value)) {
-                const temp = minRange.value;
-                minRange.value = maxRange.value;
-                maxRange.value = temp;
-            }
-            filterPrice();
+    [minrange, maxRange].forEach(inp=> {
+        inp.addEventListener("input", ()=> {
+            updatetext();
         });
     });
 });
 
+let filteredItems = [...itemsData];
+//price 
+priceBar.forEach(bar=> {
+    const minVal = parseInt(bar.querySelector("minrange").value);
+    const maxVal = parseInt(bar.querySelector('maxRange').value);
 
-//stock-rating filter
-
-const stockCheckBoxes = document.querySelectorAll(".stock-filter");
-const ratingCheckBoxes = document.querySelectorAll(".rating-filter");
-
-[...stockCheckBoxes, ...ratingCheckBoxes].forEach(input => {
-    input.addEventListener("change", applyFilters);
+    filteredItems = filteredItems.filter(itm=> itm.price >=minVal && itm.price <= maxVal);
 });
 
+//stock&rating
+const stockbox = document.querySelectorAll("stock");
+const ratingbox = document.querySelectorAll("rating");
 
-function applyFilters() {
-    let filteredItems = itemsData;
+[stockbox, ratingbox].forEach(box=> {
+    box.addEventListener("change", applyFilters);
+});
 
-    //stock
-    const selectedStock = Array.from(stockCheckBoxes)
-        .filter(input => input.checked)
-        .map(input => input.value);
+//stock
+const selstock = Array.from(stockbox)
+    .filter(itm=> itm.checked)
+    .map(ip=> ip.value);
+if(selstock.length > 0) {
+    filteredItems = filteredItems.filter(itm=> selstock.includes(itm.stock));
+};
 
-    if (selectedStock.length > 0) {
-        filteredItems = filteredItems.filter(itm => selectedStock.includes(itm.stock));
-    }
+//rating
+const selrating = Array.from(ratingbox)
+    .filter(i=> i.checked)
+    .map(p=>parseInt(p.value));
+if(selrating.length > 0) {
+    const minval = Math.min(...selrating);
+    filteredItems = filteredItems.filter(itm=> itm.rating >= minval);
+}
 
-    //rating
-    const selectedRatings = Array.from(ratingCheckBoxes)
-        .filter(inp => inp.checked)
-        .map(i => parseInt(i.value));
+//sort
+const selsort = document.getElementById("sort");
+selsort.addEventListener("change", applyFilters);
 
-    if (selectedRatings.length > 0) {
-        filteredItems = filteredItems.filter(itm => selectedRatings.includes(itm.rating));
-    }
+const sortvalue = selsort.value;
+if(sortvalue === "low-high") {
+    filteredItems.sort((a,b) =>a.price - b.price);
+}else if(sortvalue === "high-low") {
+    filteredItems.sort((a,b)=> b.price - a.price);
+}
 
-    renderItems(filteredItems);
+//reset 
+document.querySelectorAll(".reset").forEach(btn => {
+    btn.addEventListener("click", ()=>{
+        const type = btn.dataset.reset;
+        if(type === "price") {
+            resetprice(btn);
+        }else if(type === "stock") {
+            resetstock();
+        }else if(type === "rating") {
+            resetrating();
+        }
+        applyFilters();;
+    });
+});
 
+function resetprice(btn) {
+    const container = btn.closest(".price");
+    const minmaxrange = container.querySelector(".minmax class");
+    const minmaxprice = container.querySelector("minmax class");
+
+    minmaxrange.value = minrange.min;
+    minmaxprice.value = priceShow(minmaxrange);
+}
+
+function resetstock() {
+    stockbox.forEach(inp=> inp.checked = false);
+}
+
+function resetrating() {
+    ratingbox.forEach(inp=> inp.checked = false);
 }

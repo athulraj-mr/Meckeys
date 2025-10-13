@@ -4,7 +4,8 @@ async function loadItems() {
     try {
         const responds = await fetch('http://localhost:5000/items');
         itemsData = await responds.json();
-        renderItems(itemsData);
+        filteredItemsStore = [...itemsData];
+        renderScrollItems();
         wishlistBtn();
     } catch (error) {
         console.error("error loading", error);
@@ -68,9 +69,6 @@ function renderItems(items) {
 
 //sort and filters
 
-const sortSelect = document.getElementById("sort-select");
-sortSelect.addEventListener("change", applyFilters);
-
 const priceBar = document.querySelectorAll(".price");
 
 function priceShow(val) {
@@ -113,6 +111,10 @@ const ratingCheckBoxes = document.querySelectorAll(".rating-filter");
     inp.addEventListener("change", applyFilters);
 });
 
+//sort
+const sortSelect = document.getElementById("sort-select");
+sortSelect.addEventListener("change", applyFilters);
+
 //main filter
 function applyFilters() {
 
@@ -152,7 +154,10 @@ function applyFilters() {
         filteredItems.sort((a,b) => b.price - a.price);
     }
 
-    renderItems(filteredItems);
+    filteredItemsStore = filteredItems;
+    currentPage = 1;
+
+    renderScrollItems();
     wishlistBtn();
 
 }
@@ -240,3 +245,87 @@ function wishlistBtn() {
 }
 
 loadItems();
+
+//scroll
+
+ let currentPage = 1;
+ const itemPerPage = 18;
+ let filteredItemsStore = [];
+ let isLoading = false;
+
+ function renderScrollItems() {
+    const start = (currentPage - 1) * itemPerPage;
+    const end = currentPage * itemPerPage;
+    const itemsToRender = filteredItemsStore.slice(0, end);
+
+    renderItems(itemsToRender);
+    wishlistBtn();
+ }
+
+ window.addEventListener("scroll", () => {
+    if(isLoading) return;
+
+    const scrollPos = window.innerHeight + window.scrollY;
+    const pageHeight = document.documentElement.offsetHeight;
+
+    if(scrollPos >= pageHeight - 100) {
+        loadMoreItems();
+    }
+ });
+
+ function loadMoreItems() {
+    if(currentPage * itemPerPage >= filteredItemsStore.length) return;
+    isLoading = true;
+    currentPage++;
+    
+    setTimeout(() => {
+        renderScrollItems();
+        isLoading = false;
+    },500);
+ }
+
+//pricebar-color
+document.querySelectorAll(".price").forEach(fil => {
+    const minRange = fil.querySelector(".min-range");
+    const maxRange = fil.querySelector(".max-range");
+    const bar = fil.querySelector(".active-bar");
+
+    if(!minRange || !maxRange || !bar) return;
+
+    const updateBar = () => {
+        const min = parseInt(minRange.value);
+        const max = parseInt(maxRange.value);
+        const rangeMin = parseInt(minRange.min);
+        const rangeMax = parseInt(maxRange.max);
+
+        const leftPercent = ((min-rangeMin) / (rangeMax - rangeMin)) * 100;
+        const rightPercent = ((max-rangeMin) / (rangeMax - rangeMin)) * 100;
+
+        bar.style.background = `
+            linear-gradient(to right,
+                #968a8aff 0%,
+                #968a8aff ${leftPercent}%,
+                #111 ${leftPercent}%,
+                #111 ${rightPercent}%,
+                #968a8aff ${rightPercent}%,
+                #968a8aff 100%
+            )
+        `;
+    };
+
+    minRange.addEventListener("input", ()=> {
+        if(parseInt(minRange.value) > parseInt(maxRange.value)) {
+            minRange.value = maxRange.value;
+        }
+        updateBar();
+    });
+
+    maxRange.addEventListener("input", () => {
+        if(parseInt(maxRange.value) < parseInt(minRange.value)) {
+            maxRange.value = minRange.value;
+        }
+        updateBar();
+    });
+
+    updateBar();
+});
