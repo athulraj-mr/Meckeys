@@ -153,6 +153,8 @@ function applyFilters() {
         filteredItems.sort((a,b) => a.price - b.price);
     } else if(sortValue === "high-low") {
         filteredItems.sort((a,b) => b.price - a.price);
+    } else if(sortValue === "latest") {
+        filteredItems.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     }
 
     filteredItemsStore = filteredItems;
