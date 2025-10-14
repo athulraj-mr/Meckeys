@@ -711,7 +711,7 @@
 }
 
 .items-li-text-outer::before {
-    content: "sssss";
+    content: "SSSSS";
     color: #cfc8d8;
     line-height: 10.284px;
     float: left;

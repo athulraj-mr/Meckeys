@@ -64,6 +64,16 @@ function renderItems(items) {
         `;
 
         container.appendChild(li);
+
+        //rating
+        const ratingInner = li.querySelector(".items-li-text-in");
+        if(item.rating !== undefined) {
+            const width = (item.rating / 5) * 100;
+            ratingInner.style.width = `${width - 0.3}%`;
+        } else {
+            ratingInner.style.width = "0%";
+        }
+
     });
 }
 
@@ -270,8 +280,9 @@ loadItems();
 
     const scrollPos = window.innerHeight + window.scrollY;
     const pageHeight = document.documentElement.offsetHeight;
+    const threshold = window.innerHeight * 0.5;
 
-    if(scrollPos >= pageHeight - 100) {
+    if(scrollPos >= pageHeight - threshold) {
         loadMoreItems();
     }
  });
@@ -281,10 +292,8 @@ loadItems();
     isLoading = true;
     currentPage++;
     
-    setTimeout(() => {
-        renderScrollItems();
-        isLoading = false;
-    },500);
+    renderScrollItems();
+    isLoading = false;
  }
 
 //pricebar-color
