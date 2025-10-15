@@ -77,50 +77,21 @@ function renderItems(items) {
     });
 }
 
-
-//sort and filters
-
 const priceBar = document.querySelectorAll(".price");
 
 function priceShow(val) {
     return '₹' + Number(val).toLocaleString();
 }
 
-priceBar.forEach(bar => {
-    const minRange = bar.querySelector(".min-range");
-    const maxRange = bar.querySelector(".max-range");
-    const minPrice = bar.querySelector(".min-price");
-    const maxPrice = bar.querySelector(".max-price");
-
-    function updateText() {
-        if(parseInt(minRange.value) > parseInt(maxRange.value)) {
-            const temp = minRange.value;
-            minRange.value = maxRange.value;
-            maxRange.value = temp;
-        }
-
-        minPrice.value = priceShow(minRange.value);
-        maxPrice.value = priceShow(maxRange.value);
-    }
-
-    [minRange, maxRange].forEach(input => {
-            input.addEventListener("input", ()=> {
-                updateText();
-                applyFilters();
-            });
-        });
-
-    updateText();
-});
-
-
 //stock&rating
+
 const stockCheckBoxes = document.querySelectorAll(".stock-filter");
 const ratingCheckBoxes = document.querySelectorAll(".rating-filter");
 
 [...stockCheckBoxes, ...ratingCheckBoxes].forEach(inp => {
     inp.addEventListener("change", applyFilters);
 });
+
 
 //sort
 const sortSelect = document.getElementById("sort-select");
@@ -183,7 +154,7 @@ document.querySelectorAll(".reset-btn").forEach(btn => {
         if(type === "price") {
             resetPriceFilter(btn);
         }else if (type === "stock") {
-            resetStockFlilter();
+            resetStockFilter();
         }else if (type === "rating") {
             resetRatingFilter();
         }
@@ -192,6 +163,7 @@ document.querySelectorAll(".reset-btn").forEach(btn => {
     });
 });
 
+//price-reset
 function resetPriceFilter(btn) {
     const container = btn.closest(".price");
 
@@ -204,18 +176,61 @@ function resetPriceFilter(btn) {
     maxRange.value = maxRange.max;
     minPrice.value = priceShow(minRange.min);
     maxPrice.value = priceShow(maxRange.max);
+
+    updatePriceBar(container);
+    togglePriceResetVisibility(container);
+    applyFilters();
 }
 
-function resetStockFlilter() {
-    stockCheckBoxes.forEach(inp => inp.checked = false);
+//stock-reset
+document.querySelectorAll(".stock, .s-stock").forEach(container => {
+    const checkboxes = container.querySelectorAll(".stock-filter");
+    checkboxes.forEach(cb => {
+        cb.addEventListener("change", () => toggleStockReset(container));
+    });
+});
+
+function resetStockFilter() {
+    document.querySelectorAll(".stock, .s-stock").forEach(container => {
+        container.querySelectorAll(".stock-filter").forEach(cb => cb.checked = false);
+        const resetBtn = container.querySelector(".stock-reset-btn3, .side-bar-dot");
+        if (resetBtn) resetBtn.classList.remove("active");
+    });
 }
+
+function toggleStockReset(container) {
+    const checkboxes = container.querySelectorAll(".stock-filter");
+    const resetBtn = container.querySelector(".stock-reset-btn3, .side-bar-dot");
+    if (!resetBtn) return;
+
+    const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+    resetBtn.classList.toggle("active", anyChecked);
+}
+
+//rating-reset
+document.querySelectorAll(".rating-filter").forEach(cb => {
+    cb.addEventListener("change", toggleRatingReset);
+});
 
 function resetRatingFilter() {
-    ratingCheckBoxes.forEach(inp => inp.checked = false);
+    const ratingCheckBoxes = document.querySelectorAll(".rating-filter");
+    ratingCheckBoxes.forEach(cb => cb.checked = false);
+
+    document.querySelectorAll(".rating-star-dot, .s-rating-line").forEach(btn => {
+        btn.classList.remove("active");
+    });
+}
+
+function toggleRatingReset() {
+    const ratingCheckBoxes = document.querySelectorAll(".rating-filter");
+    const anyChecked = Array.from(ratingCheckBoxes).some(cb => cb.checked);
+
+    document.querySelectorAll(".rating-star-dot, .s-rating-line").forEach(btn => {
+        btn.classList.toggle("active", anyChecked);
+    });
 }
 
 //wishlist
-
 function  getWishlist() {
     return JSON.parse(localStorage.getItem("wishlist")) || [];
 }
@@ -296,48 +311,86 @@ loadItems();
     isLoading = false;
  }
 
+
 //pricebar-color
-document.querySelectorAll(".price").forEach(fil => {
-    const minRange = fil.querySelector(".min-range");
-    const maxRange = fil.querySelector(".max-range");
-    const bar = fil.querySelector(".active-bar");
+function updatePriceBar(container) {
+
+    const minRange = container.querySelector(".min-range");
+    const maxRange = container.querySelector(".max-range");
+    const bar = container.querySelector(".active-bar");
 
     if(!minRange || !maxRange || !bar) return;
+    
+    const min = parseInt(minRange.value);
+    const max = parseInt(maxRange.value);
+    const rangeMin = parseInt(minRange.min);
+    const rangeMax = parseInt(maxRange.max);
 
-    const updateBar = () => {
-        const min = parseInt(minRange.value);
-        const max = parseInt(maxRange.value);
-        const rangeMin = parseInt(minRange.min);
-        const rangeMax = parseInt(maxRange.max);
+    const leftPercent = ((min-rangeMin) / (rangeMax - rangeMin)) * 100;
+    const rightPercent = ((max-rangeMin) / (rangeMax - rangeMin)) * 100;
 
-        const leftPercent = ((min-rangeMin) / (rangeMax - rangeMin)) * 100;
-        const rightPercent = ((max-rangeMin) / (rangeMax - rangeMin)) * 100;
+    bar.style.background = `
+        linear-gradient(to right,
+            #968a8aff 0%,
+            #968a8aff ${leftPercent}%,
+            #111 ${leftPercent}%,
+            #111 ${rightPercent}%,
+            #968a8aff ${rightPercent}%,
+            #968a8aff 100%
+        )
+    `;
+};
 
-        bar.style.background = `
-            linear-gradient(to right,
-                #968a8aff 0%,
-                #968a8aff ${leftPercent}%,
-                #111 ${leftPercent}%,
-                #111 ${rightPercent}%,
-                #968a8aff ${rightPercent}%,
-                #968a8aff 100%
-            )
-        `;
+//priceBar visibility
+function togglePriceResetVisibility(container) {
+    const minRange = container.querySelector(".min-range");
+    const maxRange = container.querySelector(".max-range");
+    const resetDiv = container.querySelector(".reset-btn3");
+
+    if (!minRange || !maxRange || !resetDiv) return;
+
+    const isChanged =
+        parseInt(minRange.value) !== parseInt(minRange.min) ||
+        parseInt(maxRange.value) !== parseInt(maxRange.max);
+
+    resetDiv.classList.toggle("active", isChanged);
+}
+
+document.querySelectorAll(".price").forEach(container => {
+    const minRange = container.querySelector(".min-range");
+    const maxRange = container.querySelector(".max-range");
+    const minPrice = container.querySelector(".min-price");
+    const maxPrice = container.querySelector(".max-price");
+    const resetBtn = container.querySelector(".reset-btn[data-reset='price']");
+
+    if (!minRange || !maxRange || !minPrice || !maxPrice) return;
+
+    // Update text inputs
+    const onInputChange = () => {
+        if (parseInt(minRange.value) > parseInt(maxRange.value)) minRange.value = maxRange.value;
+        if (parseInt(maxRange.value) < parseInt(minRange.value)) maxRange.value = minRange.value;
+
+        minPrice.value = priceShow(minRange.value);
+        maxPrice.value = priceShow(maxRange.value);
+
+        updatePriceBar(container);
+        togglePriceResetVisibility(container);
+        applyFilters();
     };
 
-    minRange.addEventListener("input", ()=> {
-        if(parseInt(minRange.value) > parseInt(maxRange.value)) {
-            minRange.value = maxRange.value;
-        }
-        updateBar();
-    });
+    minRange.addEventListener("input", onInputChange);
+    maxRange.addEventListener("input", onInputChange);
 
-    maxRange.addEventListener("input", () => {
-        if(parseInt(maxRange.value) < parseInt(minRange.value)) {
-            maxRange.value = minRange.value;
-        }
-        updateBar();
-    });
+    // Reset
+    if (resetBtn) {
+        resetBtn.addEventListener("click", () => {
+            resetPriceFilter(resetBtn);
+        });
+    }
 
-    updateBar();
+    minPrice.value = priceShow(minRange.value);
+    maxPrice.value = priceShow(maxRange.value);
+    updatePriceBar(container);
+    togglePriceResetVisibility(container);
+    
 });
